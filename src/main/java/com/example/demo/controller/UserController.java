@@ -1,22 +1,20 @@
-
 package com.example.demo.controller;
+
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.demo.common.Constants;
+import com.example.demo.common.Result;
+import com.example.demo.controller.dto.UserDTO;
 import com.example.demo.entity.User;
-import com.example.demo.mapper.UserMapper;
 import com.example.demo.service.UserService;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.jws.soap.SOAPBinding;
-import javax.websocket.server.PathParam;
-import java.io.Console;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 @RestController
 @RequestMapping("/user")
@@ -43,7 +41,8 @@ public class UserController {
      */
     @PostMapping
     //使用mybtis-plus，返回boolean型
-    public Boolean save(@RequestBody User user){
+    public Boolean save(@RequestBody User user)
+    {
         return userService.saveUser(user);
     }
     @GetMapping
@@ -80,6 +79,21 @@ public class UserController {
 
         return userService.removeByIds(ids);
     }
+    @PostMapping("/login")
+    public Result login(@RequestBody UserDTO userDTO){
+        System.out.println(userDTO);
+        String username=userDTO.getUsername();//先对userDTO进行是否为空的校验
+        String password=userDTO.getPassword();
+        System.out.println(username+","+password);
+        //调用hutool工具中的StrUtil函数实现用户名和密码是否为空的判断
+        if(StrUtil.isBlank(username) || StrUtil.isBlank(password)){
+            return Result.error(Constants.CODE_400,"参数错误");
+        }
+        UserDTO dto=userService.login(userDTO);
+        return Result.success(dto);
+    }
+
+
 
 
 

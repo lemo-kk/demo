@@ -18,6 +18,7 @@ public class ServeManage {
     private  String mark;
     private  String newRootPassword;
     private  String deployApps;
+    private Integer loginPort;
 
     public Integer getId() {
         return id;
@@ -89,5 +90,13 @@ public class ServeManage {
 
     public void setDeployApps(String deployApps) {
         this.deployApps = deployApps;
+    }
+
+    public Integer getLoginPort() {
+        return loginPort;
+    }
+
+    public void setLoginPort(Integer loginPort) {
+        this.loginPort = loginPort;
     }
 }

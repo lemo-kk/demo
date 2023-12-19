@@ -9,16 +9,17 @@ import com.example.demo.entity.User;
 import com.example.demo.mapper.ServeManageMapper;
 import com.example.demo.service.ServerManageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/serverManage")
 public class ServerManageController {
     @Autowired
     private ServerManageService serverManageService;
+    @PostMapping
+    public Boolean save(@RequestBody ServeManage serveManage){
+        return serverManageService.saveServerManage(serveManage);
+    }
     @GetMapping("/page")
     public IPage<ServeManage> findPage(@RequestParam Integer pageNum,
                                        @RequestParam Integer pageSize,
@@ -33,5 +34,6 @@ public class ServerManageController {
         return serverManageService.page(page,queryWrapper);
 
     }
+
 
 }

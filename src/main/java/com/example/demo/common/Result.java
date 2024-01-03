@@ -26,5 +26,9 @@ public class Result {
     public static Result error(){ //默认一个错误类
         return new Result(Constants.CODE_500,"系统错误",null);
     }
+    public static Result error(Object data){ //返回失败
+        return new Result(Constants.CODE_700, "",data);
+    }
+
 }
 
